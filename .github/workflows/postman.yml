@@ -1,0 +1,32 @@
+name: Run Postman Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_postman_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Verificar o código
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Passo 2: Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Passo 3: Instalar o Newman (Ferramenta de CLI para Postman)
+      - name: Install Newman
+        run: npm install -g newman
+
+      # Passo 4: Rodar a coleção Postman
+      - name: Run Postman collection
+        run: newman run ./path/to/your/collection.json
